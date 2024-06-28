@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tokens</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <h1 class="nav-header">ELITE.DEV</h1>
+      <ul>
+        
+        <li><a href="/">Home</a></li>
+        <li><a href="/tech">Tech Journey</a></li>
+        <li><a href="https://hng.tech/internship">HNG Internship</a></li>
+        <li><a href="https://hng.tech/hire">HNG Hire</a></li>
+      </ul>
+    </nav>
+
+   
+    <div class="main-content token">
+     
+        <img class="token-img" src="images/internetCookie.avif" alt="" />
+        <div class="tech-box">
+            <h3>How to send both Access Token and Refresh Token to the Client-side</h3>
+              <p class="tech-box-info">
+                One of the recent difficult backend problem I solved was how to send the access token and the refresh token to 
+                the client-side, The backend executes most of the business logic, knowing that you Application server (backend-codes)
+                interacts with the web server and database server. With your web server now, you want a situation where a user will log in after 
+                some time, not being logged in indefinitely, that is the importance of sending Access Tokens and Refresh Token to the client-side, so as 
+                to verify a particular user and giving access if the verification is sucessfully, and you have to send this token to the browser in form of a cookies.
+            
+     
+          
+              </p>
+        </div>
+        <div class="tech-box">
+            <h3>Steps</h3>
+              <h4>Install Json web token</h4>
+              <p>The first thing to do is to install jwt (json-web-token) using the command -- <i>npm install jsonwebtoken</i> </p>
+
+              <h4>Require the installed package to your working file</h4>
+              <p>The next thing to do is to require the installed package -- <i>const jwt = require("jsonwebtoken")</i></p>
+
+              <h4>Access Token</h4>
+              <p>You only want to send the access token after the user is authenticated, also you can decide to pass in the 
+                some of the users details to the access token this helps in verification. <br> Also remember to create a .env
+                file, this is where your ACCESS_TOKEN_SECRET will reside
+              </p>
+              <img src="images/accessToken.PNG" alt="">
+              <p>From the example given above, the username and password is gotten from the user,
+                both are checked to ensure that the are filled out, also the username is checked to see if such username exist as a user in the
+                database, the password is hashed, now the accessToken, using the <i>.sign</i> function from the jwt package
+                I was able to send the users information in a UserInfo object, along side the ACCESS_TOKEN_SECRET which is in the .env file and also the 
+                lifespan of the access token
+              </p>
+
+              <h4>Refresh Token</h4>
+              <p>After being logged in, the refresh token is issued as well, using the <i>.sign</i> function from the jwt, the username, along side the REFRESH_TOKEN_SECRET
+                 and the lifespan. Usually the life span of refresh token is longer than that of the access Token
+              </p>
+              <img src="images/refreshToken.PNG" alt="">
+
+              <h4>Cookies</h4>
+              <p>Remember the refresh and access tokens will be send to your browser in form of a cookie, I ensured that i installed the cookie-parser <i>npm install cookie-parse</i>, require it 
+                 in the server file -- <i>const cookieParser = require("cookie-parser")</i> this is a middleware that
+                 enables you parse and manage cookies remember to use it -- <i>app.use(cookieParser())</i>. <br>
+                 
+
+            </p>
+            <img src="images/webcookie.PNG" alt="">
+            <p>The <i>res.cookie</i> enables you define various properties for the cookie, such as name "jwt", the refreshToken, etc.
+               <b>Note</b> the cookie is set to httpOnly true, so the cookie can only be accessed by the
+               browser and not accessible to javascript, and the maxAge is set has well.
+            </p>
+
+            <h4>Refresh Api</h4>
+            <p>After you are logged in, the access token get expired at some point, so the browser will have to send a request to the server to verify the access token once again, if truly the user has access to that particular page/resources. 
+                 So if the request token is not expired the refresh token automatically issue a new access token to the user, keeping the user logged in, but if the refresh token is expired, the refresh token api sends a 401 unauthorized status
+                 which then kick the user out to be logged in again
+          </p>
+          <img src="images/refresh.PNG" alt="">
+        </div>
+    </div>
+  </body>
+  <footer>
+    <p>Created with ❤ Elite.Dev</p>
+  </footer>
+</html>
