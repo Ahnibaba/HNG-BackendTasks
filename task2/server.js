@@ -7,11 +7,11 @@ const app = express()
 const PORT = process.env.PORT || 3600
 
 const apiKey = process.env.OPEN_WEATHER_API
-const publicIp = "196.223.117.6"
+//const publicIp = "196.223.117.6"
 
 app.get("/api/hello", async (req, res) => {
     const visitorName = req.query.visitor_name || "Guest" 
-    const clientIp = publicIp
+    const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress
      
 
 
