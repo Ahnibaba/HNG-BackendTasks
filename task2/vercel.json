@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "task2/server.js", 
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/hello",
+        "methods": ["GET"],
+        "dest": "task2/server.js" 
+      }
+    ],
+    "env": {
+      "OPEN_WEATHER_API": "8ff6c4854894ccf04e55aee44b337cad"
+    }
+  }
+  
